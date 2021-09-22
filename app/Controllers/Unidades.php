@@ -19,10 +19,11 @@ class Unidades extends BaseController
     {
         //buscar el estado en la tabla
         $unidades = $this->unidades->where('estado', $estado)->findAll();
-        $data = ['titulo' => 'Unidades', 'datos' => $unidades];
 
         // print_r($data);
 
-        return view('backend/unidades/index', $data);
+        return view('backend/unidades/index', [
+            'unidades' => $unidades,
+        ]);
     }
 }

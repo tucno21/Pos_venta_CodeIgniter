@@ -14,7 +14,6 @@ include '../app/Views/backend/sb_admin/head.php';
             <a href="<?php echo base_url(); ?>/unidades/eliminados" class="btn btn-warning">Eliminados</a>
         </div>
         <div class="card-body">
-            <!-- <?php echo print_r($datos); ?> -->
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -27,16 +26,16 @@ include '../app/Views/backend/sb_admin/head.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($datos as $dato) : ?>
+                        <?php foreach ($unidades as $unidad) : ?>
                             <tr>
-                                <td><?php echo $dato['id']; ?></td>
-                                <td><?php echo $dato['name']; ?></td>
-                                <td><?php echo $dato['short_name']; ?></td>
+                                <td><?php echo $unidad->id; ?></td>
+                                <td><?php echo $unidad->name; ?></td>
+                                <td><?php echo $unidad->short_name; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>/unidades/editar<?php echo $dato['id']; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="<?php echo base_url(); ?>/unidades/editar<?php echo $unidad->id; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>/unidades/eliminar<?php echo $dato['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="<?php echo base_url(); ?>/unidades/eliminar<?php echo $unidad->id; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

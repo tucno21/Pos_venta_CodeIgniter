@@ -11,7 +11,7 @@ class UnidadesModel extends Model
 
     protected $useAutoIncrement = true;
 
-    protected $returnType     = 'array';
+    protected $returnType     = 'object';
     //eliminacion de filas
     protected $useSoftDeletes = false;
 
