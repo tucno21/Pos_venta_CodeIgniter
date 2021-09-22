@@ -34,6 +34,17 @@ class Unidades extends BaseController
         return view('backend/unidades/nuevo');
     }
 
+    public function editar($id)
+    {
+        //buscar el id
+        $unidad = $this->unidades->where('id', $id)->first();
+        // print_r($unidades);
+        return view('backend/unidades/editar', [
+            'unidad' => $unidad,
+        ]);
+    }
+
+
     public function insertar()
     {
         $this->unidades->save([

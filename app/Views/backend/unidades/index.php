@@ -32,10 +32,10 @@ include '../app/Views/backend/sb_admin/head.php';
                                 <td><?php echo $unidad->name; ?></td>
                                 <td><?php echo $unidad->short_name; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>/unidades/editar<?php echo $unidad->id; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="<?php echo base_url() . '/unidades/editar/' . $unidad->id; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>/unidades/eliminar<?php echo $unidad->id; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="<?php echo base_url(); ?>/unidades/eliminar?id=<?php echo $unidad->id; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
