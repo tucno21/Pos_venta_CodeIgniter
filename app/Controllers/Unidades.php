@@ -31,7 +31,16 @@ class Unidades extends BaseController
 
     public function nuevo()
     {
-
         return view('backend/unidades/nuevo');
+    }
+
+    public function insertar()
+    {
+        $this->unidades->save([
+            'name' => $this->request->getPost('name'),
+            'short_name' => $this->request->getPost('short_name')
+        ]);
+
+        return redirect()->to(base_url() . '/unidades');
     }
 }
