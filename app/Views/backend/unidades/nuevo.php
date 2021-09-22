@@ -5,7 +5,7 @@ include '../app/Views/backend/sb_admin/head.php';
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Unidades</h1>
+    <h1 class="h3 mb-2 text-gray-800">Nuevo Unidad</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">

@@ -26,4 +26,12 @@ class Unidades extends BaseController
             'unidades' => $unidades,
         ]);
     }
+
+
+
+    public function nuevo()
+    {
+
+        return view('backend/unidades/nuevo');
+    }
 }
