@@ -28,7 +28,7 @@
                                 <td><?php echo $unidad->name; ?></td>
                                 <td><?php echo $unidad->short_name; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('/unidades/restablecer?id=' . $unidad->id); ?>" class="btn btn-success"><i class="fas fa-arrow-circle-up"></i></a>
+                                    <a href="<?php echo base_url('/unidades/restablecer?id=' . $unidad->id); ?>" class="btn btn-success alertaRestaurar"><i class="fas fa-arrow-circle-up"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

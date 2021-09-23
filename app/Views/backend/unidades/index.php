@@ -33,7 +33,7 @@
                                     <a href="<?php echo base_url('/unidades/editar?id=' . $unidad->id); ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url('/unidades/eliminar?id=' . $unidad->id); ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="<?php echo base_url('/unidades/eliminar?id=' . $unidad->id); ?>" class="btn btn-danger alertaBorrar"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
