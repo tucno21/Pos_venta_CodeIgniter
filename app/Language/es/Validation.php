@@ -53,7 +53,7 @@ return [
     'string'                => 'The {field} field must be a valid string.',
     'timezone'              => 'The {field} field must be a valid timezone.',
     'valid_base64'          => 'The {field} field must be a valid base64 string.',
-    'valid_email'           => 'The {field} field must contain a valid email address.',
+    'valid_email'           => 'El {field} no tiene formato valido.',
     'valid_emails'          => 'The {field} field must contain all valid email addresses.',
     'valid_ip'              => 'The {field} field must contain a valid IP.',
     'valid_url'             => 'The {field} field must contain a valid URL.',
