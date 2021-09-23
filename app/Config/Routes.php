@@ -49,3 +49,6 @@ $routes->get('/', 'Home::index');
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+$routes->get('/unidades', 'Unidades::index');
+$routes->get('/unidades/nuevo', 'Unidades::nuevo');
+$routes->get('/unidades/editar/(:num)', 'Unidades::editar');

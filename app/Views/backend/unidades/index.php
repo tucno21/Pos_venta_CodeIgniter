@@ -3,11 +3,11 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Unidades</h1>
+    <h1 class="mb-2 text-gray-800 h3">Unidades</h1>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+    <div class="mb-4 shadow card">
+        <div class="py-3 card-header">
             <a href="<?php echo base_url(); ?>/unidades/nuevo" class="btn btn-info">Agregar</a>
             <a href="<?php echo base_url(); ?>/unidades/eliminados" class="btn btn-warning">Eliminados</a>
         </div>
@@ -30,10 +30,10 @@
                                 <td><?php echo $unidad->name; ?></td>
                                 <td><?php echo $unidad->short_name; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url() . '/unidades/editar/' . $unidad->id; ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                    <a href="<?php echo base_url('/unidades/editar?id=' . $unidad->id); ?>" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url(); ?>/unidades/eliminar?id=<?php echo $unidad->id; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="<?php echo base_url('/unidades/eliminar?id=' . $unidad->id); ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

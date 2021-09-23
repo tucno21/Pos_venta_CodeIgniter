@@ -44,14 +44,14 @@ class Unidades extends BaseController
 
     public function editar()
     {
-        //buscar el id
-        // $unidad = $this->unidades->where('id', $id)->first();
+        $id = $_GET['id'];
+        $unidad = $this->unidades->where('id', $id)->first();
         // print_r($unidades);
         $template['head'] =  view('backend/sb_admin/head');
         $template['footer'] =  view('backend/sb_admin/footer');
 
         return view('backend/unidades/editar', [
-            // 'unidad' => $unidad,
+            'unidad' => $unidad,
             'template' => $template,
         ]);
     }
@@ -60,6 +60,16 @@ class Unidades extends BaseController
     public function insertar()
     {
         $this->unidades->save([
+            'name' => $this->request->getPost('name'),
+            'short_name' => $this->request->getPost('short_name')
+        ]);
+
+        return redirect()->to(base_url() . '/unidades');
+    }
+
+    public function actualizar()
+    {
+        $this->unidades->update($this->request->getPost('id'), [
             'name' => $this->request->getPost('name'),
             'short_name' => $this->request->getPost('short_name')
         ]);
