@@ -11,6 +11,7 @@ class Unidades extends BaseController
 
     public function __construct()
     {
+        helper(['form', 'url']);
         $this->unidades = new UnidadesModel();
     }
 
@@ -59,22 +60,51 @@ class Unidades extends BaseController
 
     public function insertar()
     {
-        $this->unidades->save([
-            'name' => $this->request->getPost('name'),
-            'short_name' => $this->request->getPost('short_name')
+        $inputs = $this->validate([
+            'name' => 'required|min_length[3]',
+            'short_name' => 'required',
         ]);
 
-        return redirect()->to(base_url() . '/unidades');
+        if (!$inputs) {
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/unidades/nuevo', [
+                'validation' => $this->validator,
+                'template' => $template,
+            ]);
+        } else {
+            $this->unidades->save([
+                'name' => $this->request->getPost('name'),
+                'short_name' => $this->request->getPost('short_name')
+            ]);
+
+            return redirect()->to(base_url() . '/unidades');
+        }
     }
 
     public function actualizar()
     {
-        $this->unidades->update($this->request->getPost('id'), [
-            'name' => $this->request->getPost('name'),
-            'short_name' => $this->request->getPost('short_name')
+        $inputs = $this->validate([
+            'name' => 'required|min_length[3]',
+            'short_name' => 'required',
         ]);
 
-        return redirect()->to(base_url() . '/unidades');
+        if (!$inputs) {
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/unidades/nuevo', [
+                'validation' => $this->validator,
+                'template' => $template,
+            ]);
+        } else {
+
+            $this->unidades->update($this->request->getPost('id'), [
+                'name' => $this->request->getPost('name'),
+                'short_name' => $this->request->getPost('short_name')
+            ]);
+
+            return redirect()->to(base_url() . '/unidades');
+        }
     }
 
     public function eliminar()
