@@ -86,4 +86,31 @@ class Unidades extends BaseController
 
         return redirect()->to(base_url() . '/unidades');
     }
+
+    //crear una variable sobre el estado y solo mostrar
+    public function eliminados($estado = 0)
+    {
+        //buscar el estado en la tabla
+        $unidades = $this->unidades->where('estado', $estado)->findAll();
+
+        // print_r($data);
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+        // print_r($template['head']);
+
+        return view('backend/unidades/eliminados', [
+            'unidades' => $unidades,
+            'template' => $template,
+        ]);
+    }
+
+    public function restablecer()
+    {
+        $id = $_GET['id'];
+        $this->unidades->update($id, [
+            'estado' => 1
+        ]);
+
+        return redirect()->to(base_url() . '/unidades');
+    }
 }
