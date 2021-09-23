@@ -82,12 +82,24 @@ class Categorias extends BaseController
 
     public function actualizar()
     {
-        $this->categorias->update($this->request->getPost('id'), [
-            'name' => $this->request->getPost('name'),
-            'short_name' => $this->request->getPost('short_name')
+        $inputs = $this->validate([
+            'name' => 'required|min_length[3]',
         ]);
 
-        return redirect()->to(base_url() . '/categorias');
+        if (!$inputs) {
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/categorias/nuevo', [
+                'validation' => $this->validator,
+                'template' => $template,
+            ]);
+        } else {
+            $this->categorias->update($this->request->getPost('id'), [
+                'name' => $this->request->getPost('name'),
+                'short_name' => $this->request->getPost('short_name')
+            ]);
+            return redirect()->to(base_url() . '/categorias');
+        }
     }
 
     public function eliminar()
