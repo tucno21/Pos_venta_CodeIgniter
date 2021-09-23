@@ -38,7 +38,7 @@
                 <div id="collapseC" class="collapse" aria-labelledby="headingC" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/configuraciones">Configuración</a>
-                        <a class="collapse-item" href="/unidades">..</a>
+                        <a class="collapse-item" href="/usuarios">Usuarios</a>
                         <a class="collapse-item" href="/categorias">..</a>
                     </div>
                 </div>

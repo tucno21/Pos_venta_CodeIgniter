@@ -40,7 +40,7 @@ return [
     'is_unique'             => 'El {field}  ya existe en la base de datos.',
     'less_than'             => 'The {field} field must contain a number less than {param}.',
     'less_than_equal_to'    => 'The {field} field must contain a number less than or equal to {param}.',
-    'matches'               => 'The {field} field does not match the {param} field.',
+    'matches'               => 'El {field} no coincide con el campo {param}.',
     'max_length'            => 'The {field} field cannot exceed {param} characters in length.',
     'min_length'            => 'EL campo {field} debe ser mas de {param} caracteres.',
     'not_equals'            => 'The {field} field cannot be: {param}.',
