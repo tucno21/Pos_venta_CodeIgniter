@@ -1,6 +1,4 @@
-<?php
-include '../app/Views/backend/sb_admin/head.php';
-?>
+<?= $template['head'] ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -36,6 +34,4 @@ include '../app/Views/backend/sb_admin/head.php';
 
 </div>
 <!-- /.container-fluid -->
-<?php
-include '../app/Views/backend/sb_admin/footer.php';
-?>
+<?= $template['footer'] ?>

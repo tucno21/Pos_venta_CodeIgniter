@@ -1,6 +1,4 @@
-<?php
-include '../app/Views/backend/sb_admin/head.php';
-?>
+<?= $template['head'] ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -18,11 +16,11 @@ include '../app/Views/backend/sb_admin/head.php';
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <label for="name">Nombre</label>
-                            <input id="name" class="form-control" type="text" name="name" value="<?php echo $unidad->name; ?>" autofocus required>
+                            <input id="name" class="form-control" type="text" name="name" value="<?php echo isset($unidad->name); ?>" autofocus required>
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="short_name">Nombre Corto</label>
-                            <input id="short_name" class="form-control" type="text" name="short_name" value="<?php echo $unidad->short_name; ?>" autofocus required>
+                            <input id="short_name" class="form-control" type="text" name="short_name" value="<?php echo isset($unidad->short_name); ?>" autofocus required>
                         </div>
                     </div>
                 </div>
@@ -36,6 +34,4 @@ include '../app/Views/backend/sb_admin/head.php';
 
 </div>
 <!-- /.container-fluid -->
-<?php
-include '../app/Views/backend/sb_admin/footer.php';
-?>
+<?= $template['footer'] ?>

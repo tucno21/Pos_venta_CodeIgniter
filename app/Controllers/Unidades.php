@@ -21,9 +21,13 @@ class Unidades extends BaseController
         $unidades = $this->unidades->where('estado', $estado)->findAll();
 
         // print_r($data);
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+        // print_r($template['head']);
 
         return view('backend/unidades/index', [
             'unidades' => $unidades,
+            'template' => $template,
         ]);
     }
 
@@ -31,16 +35,24 @@ class Unidades extends BaseController
 
     public function nuevo()
     {
-        return view('backend/unidades/nuevo');
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+        return view('backend/unidades/nuevo', [
+            'template' => $template,
+        ]);
     }
 
-    public function editar($id)
+    public function editar()
     {
         //buscar el id
-        $unidad = $this->unidades->where('id', $id)->first();
+        // $unidad = $this->unidades->where('id', $id)->first();
         // print_r($unidades);
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+
         return view('backend/unidades/editar', [
-            'unidad' => $unidad,
+            // 'unidad' => $unidad,
+            'template' => $template,
         ]);
     }
 
