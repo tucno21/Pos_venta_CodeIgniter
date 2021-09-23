@@ -11,6 +11,7 @@ class Categorias extends BaseController
 
     public function __construct()
     {
+        helper(['form', 'url']);
         $this->categorias = new CategoriasModel();
     }
 
@@ -44,11 +45,24 @@ class Categorias extends BaseController
 
     public function insertar()
     {
-        $this->categorias->save([
-            'name' => $this->request->getPost('name')
+
+        $inputs = $this->validate([
+            'name' => 'required|min_length[3]',
         ]);
 
-        return redirect()->to(base_url() . '/categorias');
+        if (!$inputs) {
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/categorias/nuevo', [
+                'validation' => $this->validator,
+                'template' => $template,
+            ]);
+        } else {
+            $this->categorias->save([
+                'name' => $this->request->getPost('name')
+            ]);
+            return redirect()->to(base_url() . '/categorias');
+        }
     }
 
     public function editar()
