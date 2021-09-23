@@ -56,7 +56,7 @@ class Productos extends BaseController
     public function insertar()
     {
         $inputs = $this->validate([
-            'codigo' => 'required|min_length[3]',
+            'codigo' => 'required|min_length[3]|is_unique[productos.codigo]',
             'name' => 'required|min_length[3]',
             'unidadId' => 'required|numeric|is_not_unique[unidades.id]',
             'categoriaId' => 'required|numeric|is_not_unique[categorias.id]',
@@ -117,7 +117,7 @@ class Productos extends BaseController
     public function actualizar()
     {
         $inputs = $this->validate([
-            'codigo' => 'required|min_length[3]',
+            'codigo' => 'required|min_length[3]|is_unique[productos.codigo]',
             'name' => 'required|min_length[3]',
             'unidadId' => 'required|numeric|is_not_unique[unidades.id]',
             'categoriaId' => 'required|numeric|is_not_unique[categorias.id]',
