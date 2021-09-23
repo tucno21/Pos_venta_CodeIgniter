@@ -26,7 +26,7 @@
                                 <td><?php echo $categoria->id; ?></td>
                                 <td><?php echo $categoria->name; ?></td>
                                 <td>
-                                    <a href="<?php echo base_url('/unidades/restablecer?id=' . $categoria->id); ?>" class="btn btn-success"><i class="fas fa-arrow-circle-up"></i></a>
+                                    <a href="<?php echo base_url('/categorias/restablecer?id=' . $categoria->id); ?>" class="btn btn-success alertaRestaurar"><i class="fas fa-arrow-circle-up"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
