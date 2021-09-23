@@ -76,4 +76,14 @@ class Unidades extends BaseController
 
         return redirect()->to(base_url() . '/unidades');
     }
+
+    public function eliminar()
+    {
+        $id = $_GET['id'];
+        $this->unidades->update($id, [
+            'estado' => 0
+        ]);
+
+        return redirect()->to(base_url() . '/unidades');
+    }
 }
