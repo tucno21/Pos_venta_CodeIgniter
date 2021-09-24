@@ -240,13 +240,9 @@ $name = $session->name;
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/usuarios/rescontra">
                                     <i class="mr-2 text-gray-400 fas fa-user fa-sm fa-fw"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="mr-2 text-gray-400 fas fa-cogs fa-sm fa-fw"></i>
-                                    Settings
+                                    Cambiar contraseña
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="mr-2 text-gray-400 fas fa-list fa-sm fa-fw"></i>

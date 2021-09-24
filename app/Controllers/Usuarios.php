@@ -182,4 +182,58 @@ class Usuarios extends BaseController
 
         return redirect()->to(base_url() . '/usuarios');
     }
+
+    public function rescontra()
+    {
+        $session = session();
+
+        $usuario = $this->usuarios->where('id', $session->id_username)->first();
+
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+
+        return view('backend/usuarios/rescontra', [
+            'usuario' => $usuario,
+            'template' => $template,
+        ]);
+    }
+
+    public function actualizar_password()
+    {
+        $inputs = $this->validate([
+            'password' => 'required|min_length[3]',
+            'repassword' => 'required|matches[password]',
+        ]);
+
+        if (!$inputs) {
+
+            $session = session();
+
+            $usuario = $this->usuarios->where('id', $session->id_username)->first();
+
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/usuarios/rescontra', [
+                'usuario' => $usuario,
+                'validation' => $this->validator,
+                'template' => $template,
+            ]);
+        } else {
+            $session = session();
+            $usuario = $this->usuarios->where('id', $session->id_username)->first();
+
+            $this->usuarios->update($session->id_username, [
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
+            ]);
+
+            $mensaje = 'La contraseña se ha cambiado!';
+            $template['head'] =  view('backend/sb_admin/head');
+            $template['footer'] =  view('backend/sb_admin/footer');
+            return view('backend/usuarios/rescontra', [
+                'usuario' => $usuario,
+                'mensaje' => $mensaje,
+                'template' => $template,
+            ]);
+        }
+    }
 }
