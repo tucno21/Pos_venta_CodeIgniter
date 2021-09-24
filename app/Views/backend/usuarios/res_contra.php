@@ -61,44 +61,6 @@
                     </div>
                 </div>
 
-                <!-- caja  y rol -->
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <label class="form-label">Caja</label>
-                            <div class="is-invalid">
-
-                                <select class="form-control <?php if ($validation->getError('id_caja')) : ?>is-invalid<?php endif ?>" name="id_caja" required>
-                                    <option value="">Seleccione</option>
-                                    <?php foreach ($cajas as $caja) : ?>
-                                        <option <?php echo $usuario->id_caja === $caja->id ? 'selected' : ''; ?> value="<?php echo $caja->id; ?>"><?php echo $caja->name; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <?php if ($validation->getError('id_caja')) : ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('id_caja') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <label class="form-label">Rol</label>
-
-                            <select class="form-control <?php if ($validation->getError('id_rol')) : ?>is-invalid<?php endif ?>" name="id_rol" <?php if ($validation->getError('id_rol')) : ?>is-invalid<?php endif ?>" required>
-                                <option value="">Seleccione</option>
-                                <?php foreach ($roles as $rol) : ?>
-                                    <option <?php echo $usuario->id_rol === $rol->id ? 'selected' : ''; ?> value="<?php echo $rol->id; ?>"><?php echo $rol->name; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-
-                            <?php if ($validation->getError('id_rol')) : ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('id_rol') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="card-footer">
                 <input type="hidden" name="id" value="<?php echo $usuario->id; ?>">

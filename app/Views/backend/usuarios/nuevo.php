@@ -3,11 +3,11 @@
 <div class="container-fluid">
     <?php $validation =  \Config\Services::validation(); ?>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Nuevo Producto</h1>
+    <h1 class="mb-2 text-gray-800 h3">Nuevo Producto</h1>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+    <div class="mb-4 shadow card">
+        <div class="py-3 card-header">
             <a href="<?php echo base_url(); ?>/usuarios" class="btn btn-info">Volver</a>
         </div>
         <form action="<?php echo base_url(); ?>/usuarios/insertar" method="post" autocomplete="off">
@@ -64,7 +64,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12 col-sm-6">
-                            <label class="form-label">Rol</label>
+                            <label class="form-label">Caja</label>
 
                             <select class="form-control <?php if ($validation->getError('id_rol')) : ?>is-invalid<?php endif ?>" name="id_rol" <?php if ($validation->getError('id_rol')) : ?>is-invalid<?php endif ?>" required>
                                 <option value="">Seleccione</option>
@@ -80,7 +80,7 @@
                             <?php endif; ?>
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label class="form-label">Caja</label>
+                            <label class="form-label">Rol</label>
                             <div class="is-invalid">
 
                                 <select class="form-control <?php if ($validation->getError('id_caja')) : ?>is-invalid<?php endif ?>" name="id_caja" required>

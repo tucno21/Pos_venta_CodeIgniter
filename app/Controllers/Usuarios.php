@@ -92,7 +92,7 @@ class Usuarios extends BaseController
     public function editar()
     {
         $id = $_GET['id'];
-        $producto = $this->usuarios->where('id', $id)->first();
+        $usuario = $this->usuarios->where('id', $id)->first();
         // print_r($usuarios);
 
         $roles = $this->roles->where('estado', 1)->findAll();
@@ -102,7 +102,7 @@ class Usuarios extends BaseController
         $template['footer'] =  view('backend/sb_admin/footer');
 
         return view('backend/usuarios/editar', [
-            'producto' => $producto,
+            'usuario' => $usuario,
             'template' => $template,
             'roles' => $roles,
             'cajas' => $cajas,
@@ -112,14 +112,12 @@ class Usuarios extends BaseController
     public function actualizar()
     {
         $inputs = $this->validate([
-            'codigo' => 'required|min_length[3]|is_unique[usuarios.codigo]',
+            'username' => 'required|min_length[3]',
+            'password' => 'required|min_length[3]',
+            'repassword' => 'required|matches[password]',
             'name' => 'required|min_length[3]',
-            'unidadId' => 'required|numeric|is_not_unique[cajas.id]',
-            'categoriaId' => 'required|numeric|is_not_unique[roles.id]',
-            'precio_compra' => 'required|numeric',
-            'precio_venta' => 'required|numeric',
-            'stock_minimo' => 'required|numeric',
-            'inventariable' => 'required|numeric',
+            'id_caja' => 'required|numeric|is_not_unique[cajas.id]',
+            'id_rol' => 'required|numeric|is_not_unique[roles.id]',
         ]);
 
         if (!$inputs) {
@@ -137,14 +135,11 @@ class Usuarios extends BaseController
         } else {
 
             $this->usuarios->update($this->request->getPost('id'), [
-                'codigo' => $this->request->getPost('codigo'),
+                'username' => $this->request->getPost('username'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
                 'name' => $this->request->getPost('name'),
-                'unidadId' => $this->request->getPost('unidadId'),
-                'categoriaId' => $this->request->getPost('categoriaId'),
-                'precio_compra' => $this->request->getPost('precio_compra'),
-                'precio_venta' => $this->request->getPost('precio_venta'),
-                'stock_minimo' => $this->request->getPost('stock_minimo'),
-                'inventariable' => $this->request->getPost('inventariable')
+                'id_caja' => $this->request->getPost('id_caja'),
+                'id_rol' => $this->request->getPost('id_rol'),
             ]);
 
             return redirect()->to(base_url() . '/usuarios');
