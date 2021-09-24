@@ -1,3 +1,14 @@
+<?php
+$session = session();
+$name = $session->name;
+
+// if ($name == null || $name == '') {
+//     return redirect()->to(base_url('/'));
+//     // header('Location: /');
+// }
+
+// d($name);
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -222,7 +233,9 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 text-gray-600 d-none d-lg-inline small">Douglas McGee</span>
+                                <span class="mr-2 text-gray-600 d-none d-lg-inline small">
+                                    <?= $name ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
