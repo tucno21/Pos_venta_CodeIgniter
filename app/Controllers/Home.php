@@ -38,6 +38,16 @@ class Home extends BaseController
                     $encritar = password_verify($password, $usuario->password);
 
                     if ($encritar) {
+                        $datosSesion = [
+                            'id_username' => $usuario->id,
+                            'name' => $usuario->name,
+                            'id_caja' => $usuario->id_caja,
+                            'id_rol' => $usuario->id_rol,
+                        ];
+
+                        $session = session();
+                        $session->set($datosSesion);
+
                         return redirect()->to(base_url() . '/dashboard');
                     } else {
                         $errorPass = 'Erro de contraseña';
@@ -57,8 +67,10 @@ class Home extends BaseController
         }
     }
 
-    // public function vlogin()
-    // {
-
-    // }
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        return redirect()->to(base_url());
+    }
 }
