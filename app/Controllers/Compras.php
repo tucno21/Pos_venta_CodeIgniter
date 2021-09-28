@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 
+use stdClass;
 use App\Models\ComprasModel;
+use App\Models\ProductosModel;
 
 class Compras extends BaseController
 {
@@ -14,6 +16,7 @@ class Compras extends BaseController
     {
         helper(['form', 'url']);
         $this->compras = new ComprasModel();
+        $this->productos = new ProductosModel();
     }
 
     //crear una variable sobre el estado y solo mostrar
@@ -225,5 +228,35 @@ class Compras extends BaseController
                 'template' => $template,
             ]);
         }
+    }
+
+
+
+    public function buscarCodigo()
+    {
+        $codigo = $_GET['codigo'];
+
+        $this->productos->select('*');
+        $this->productos->where('codigo', $codigo);
+        $this->productos->where('estado', 1);
+        $producto = $this->productos->get()->getRow();
+        // $producto = $this->productos->where('codigo', $codigo)->where('estado', 1)->first();
+
+        $res['existe'] = false;
+        $res['producto'] = '';
+        $res['error'] = '';
+
+        if ($producto) {
+            $res['producto'] = $producto;
+            $res['existe'] = true;
+        } else {
+            $res['error'] = 'no existe producto';
+            $res['existe'] = false;
+            // $objeto = new stdClass();
+            // $objeto->error = 'no existe producto';
+            // echo json_encode($objeto);
+        }
+
+        echo json_encode($res);
     }
 }

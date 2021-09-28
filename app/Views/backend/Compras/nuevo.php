@@ -18,20 +18,16 @@
                     <div class="row">
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Código</label>
-                            <input type="text" class="form-control <?php if ($validation->getError('codigo')) : ?>is-invalid<?php endif ?>" name="codigo" value="<?php echo set_value('codigo'); ?>" autofocus placeholder="Ingresa el codigo y enter" />
-                            <?php if ($validation->getError('codigo')) : ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('codigo') ?>
-                                </div>
-                            <?php endif; ?>
+                            <input type="text" id="codigoCompra" class="form-control" name="codigo" value="" autofocus placeholder="Ingresa el codigo y enter" />
+                            <div id="errorProducto"></div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Nombre del Producto</label>
-                            <input type="text" class="form-control" name="name" value="" autofocus required disabled />
+                            <input id='nameProducto' type="text" class="form-control" name="name" autofocus required disabled />
                         </div>
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" name="cantidad" value="" autofocus required />
+                            <input id='cantidadProducto' type="number" class="form-control" name="cantidad" value="" autofocus required min="1" />
                         </div>
                     </div>
                 </div>
@@ -40,14 +36,15 @@
                     <div class="row">
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Precio de Compra</label>
-                            <input type="number" class="form-control" name="precio_compra" value="" autofocus required />
+                            <input id='PrecioProducto' type="number" class="form-control" name="precio_compra" value="" autofocus required disabled />
                         </div>
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Sub Total</label>
-                            <input type="number" class="form-control" name="subtotal" value="" autofocus required disabled />
+                            <input id='SubtotalProducto' type="number" class="form-control" name="subtotal" value="" autofocus required disabled />
                         </div>
                         <div class="col-12 col-sm-4">
                             <label class="text-white form-label">__</label>
+                            <input type="hidden" id="idProducto">
                             <button type="button" class="btn btn-primary btn-block">Agregar Producto</button>
                         </div>
                     </div>
