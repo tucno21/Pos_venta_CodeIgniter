@@ -3,11 +3,11 @@
 <div class="container-fluid">
     <?php $validation =  \Config\Services::validation(); ?>
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Nuevo Compra</h1>
+    <h1 class="mb-2 text-gray-800 h3">Nuevo Compra</h1>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
+    <div class="mb-4 shadow card">
+        <div class="py-3 card-header">
             <a href="<?php echo base_url(); ?>/compras" class="btn btn-info">Volver</a>
         </div>
         <form action="<?php echo base_url(); ?>/compras/insertar" method="post" autocomplete="off">
@@ -47,7 +47,7 @@
                             <input type="number" class="form-control" name="subtotal" value="" autofocus required disabled />
                         </div>
                         <div class="col-12 col-sm-4">
-                            <label class="form-label text-white">__</label>
+                            <label class="text-white form-label">__</label>
                             <button type="button" class="btn btn-primary btn-block">Agregar Producto</button>
                         </div>
                     </div>
@@ -67,14 +67,16 @@
                             <th width="1%"></th>
                         </thead>
                         <tbody>
-
+                            654321||123456
                         </tbody>
                     </table>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-sm-6 offset-md-6">
-
+                        <label style="font-weight: bold; font-size: 30px; text-align: center;">TOTAL S/</label>
+                        <input type="text" id="total" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
+                        <button type="button" id="completa_compra" class="btn btn-primary">Completar Compra</button>
                     </div>
                 </div>
             </div>
