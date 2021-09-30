@@ -66,7 +66,7 @@
                             <th width="1%"></th>
                         </thead>
                         <tbody>
-                            654321||123456
+
                         </tbody>
                     </table>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6 offset-md-6">
                         <label style="font-weight: bold; font-size: 30px; text-align: center;">TOTAL S/</label>
-                        <input type="text" id="total" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
+                        <input type="text" id="totalCompra" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
                         <button type="button" id="completa_compra" class="btn btn-primary">Completar Compra</button>
                     </div>
                 </div>

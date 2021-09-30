@@ -76,10 +76,16 @@ $("#agregarProducto").click(function(){
         url : urlT,
         dataType: 'JSON',
         success: function(resp) {
-            console.log(resp.enviado);
+            // var resultado = JSON.parse(resp);
+            // console.log(resp);
+            // console.log(resultado);
             if(resp.enviado == false) {
          
             }else{
+                $(".tablaproductos tbody").empty();
+                $(".tablaproductos tbody").append(resp.verCompra);
+                $("#totalCompra").val(resp.total);
+
                 $("#errorProducto").empty();
                 $('#codigoCompra').val('');
                 $('#idProducto').val('');
