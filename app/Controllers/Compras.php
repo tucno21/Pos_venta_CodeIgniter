@@ -6,6 +6,7 @@ namespace App\Controllers;
 use stdClass;
 use App\Models\ComprasModel;
 use App\Models\ProductosModel;
+use App\Models\TemporalComprasModel;
 
 class Compras extends BaseController
 {
@@ -17,6 +18,7 @@ class Compras extends BaseController
         helper(['form', 'url']);
         $this->compras = new ComprasModel();
         $this->productos = new ProductosModel();
+        $this->comprasTemporal = new TemporalComprasModel();
     }
 
     //crear una variable sobre el estado y solo mostrar
@@ -258,5 +260,53 @@ class Compras extends BaseController
         }
 
         echo json_encode($res);
+    }
+
+
+    public function compraTemporal()
+    {
+        $id_producto = $_GET['id_producto'];
+        $cantidad = $_GET['cantidad'];
+        $id_compra = $_GET['id_compra'];
+
+        $producto = $this->productos->where('id', $id_producto)->first();
+
+        $resultado['enviado'] = false;
+        // $res['producto'] = '';
+        $resultado['error'] = '';
+
+        if ($producto) {
+            $compraTemporal = $this->comprasTemporal->where('folio', $id_compra)->first();
+
+            if ($compraTemporal) {
+
+                $subtotal = $producto->precio_compra * $cantidad;
+                // d($subtotal);
+
+                $res = $this->comprasTemporal->update($compraTemporal->id, [
+                    'cantidad' => $cantidad,
+                    'subtotal' => $subtotal,
+                ]);
+
+                $resultado['enviado'] = true;
+                // d($res);
+            } else {
+                $subtotal = $producto->precio_compra * $cantidad;
+                // d($subtotal);
+                $res = $this->comprasTemporal->save([
+                    'folio' => $id_compra,
+                    'id_producto' => $id_producto,
+                    'codigo' => $producto->codigo,
+                    'name' => $producto->name,
+                    'cantidad' => $cantidad,
+                    'precio' => $producto->precio_compra,
+                    'subtotal' => $subtotal,
+                ]);
+                // d($res);
+                $resultado['enviado'] = true;
+            }
+        }
+
+        echo json_encode($resultado);
     }
 }

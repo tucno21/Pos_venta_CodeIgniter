@@ -16,7 +16,7 @@ $('#codigoCompra').keypress(function (e) {
             url : url,
             dataType: 'JSON',
             success: function(respuesta) {
-                // console.log(respuesta.existe)
+                console.log(respuesta.existe)
                 if(respuesta.existe == false) {
                     $('#codigoCompra').val('');
                     $("#errorProducto").append("<p class='text-danger'>"+respuesta.error+"</p>");
@@ -65,3 +65,29 @@ $("#cantidadProducto").on("change keyup paste", function(){
 
     // console.log(subTotal);
 })
+
+$("#agregarProducto").click(function(){
+    var idProducto = $('#idProducto').val();
+    var cantidad =  $('#cantidadProducto').val();
+    var id_compra = $('#id_compra').val();
+    var urlT = '/compras/compraTemporal?id_producto=' + idProducto + '&cantidad=' + cantidad +'&id_compra=' + id_compra;
+
+    $.ajax({
+        url : urlT,
+        dataType: 'JSON',
+        success: function(resp) {
+            console.log(resp.enviado);
+            if(resp.enviado == false) {
+         
+            }else{
+                $("#errorProducto").empty();
+                $('#codigoCompra').val('');
+                $('#idProducto').val('');
+                $('#nameProducto').val('');
+                $('#cantidadProducto').val('');
+                $('#PrecioProducto').val('');
+                $('#SubtotalProducto').val('');
+            }
+        }
+    })
+});

@@ -1,4 +1,5 @@
 <?= $template['head'] ?>
+<?php $id_compra = uniqid(); ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <?php $validation =  \Config\Services::validation(); ?>
@@ -10,7 +11,7 @@
         <div class="py-3 card-header">
             <a href="<?php echo base_url(); ?>/compras" class="btn btn-info">Volver</a>
         </div>
-        <form action="<?php echo base_url(); ?>/compras/insertar" method="post" autocomplete="off">
+        <form id="formEnviar" action="<?php echo base_url(); ?>/compras/compraTemporal" autocomplete="off">
             <?= csrf_field() ?>
             <div class="card-body">
                 <!-- grupo -->
@@ -44,8 +45,9 @@
                         </div>
                         <div class="col-12 col-sm-4">
                             <label class="text-white form-label">__</label>
-                            <input type="hidden" id="idProducto">
-                            <button type="button" class="btn btn-primary btn-block">Agregar Producto</button>
+                            <input type="hidden" id="idProducto" name="idProducto">
+                            <input type="hidden" id="id_compra" name="id_compra" value="<?php echo $id_compra; ?>">
+                            <button id="agregarProducto" type="button" class="btn btn-primary btn-block">Agregar Producto</button>
                         </div>
                     </div>
                 </div>
