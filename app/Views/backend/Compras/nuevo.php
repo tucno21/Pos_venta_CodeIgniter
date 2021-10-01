@@ -11,7 +11,7 @@
         <div class="py-3 card-header">
             <a href="<?php echo base_url(); ?>/compras" class="btn btn-info">Volver</a>
         </div>
-        <form id="formEnviar" action="<?php echo base_url(); ?>/compras/compraTemporal" autocomplete="off">
+        <form method="post" id="form_compra" action="<?php echo base_url(); ?>/compras/guardarCompra" autocomplete="off">
             <?= csrf_field() ?>
             <div class="card-body">
                 <!-- grupo -->
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6 offset-md-6">
                         <label style="font-weight: bold; font-size: 30px; text-align: center;">TOTAL S/</label>
-                        <input type="text" id="totalCompra" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
+                        <input type="text" id="totalCompra" name="totalCompra" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
                         <button type="button" id="completa_compra" class="btn btn-primary">Completar Compra</button>
                     </div>
                 </div>

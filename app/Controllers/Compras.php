@@ -6,12 +6,13 @@ namespace App\Controllers;
 use stdClass;
 use App\Models\ComprasModel;
 use App\Models\ProductosModel;
+use App\Models\DetalleCompraModel;
 use App\Models\TemporalComprasModel;
 
 class Compras extends BaseController
 {
 
-    protected $compras;
+    protected $compras, $comprasTemporal, $productos, $detalleCompra;
 
     public function __construct()
     {
@@ -19,6 +20,7 @@ class Compras extends BaseController
         $this->compras = new ComprasModel();
         $this->productos = new ProductosModel();
         $this->comprasTemporal = new TemporalComprasModel();
+        $this->detalleCompra = new DetalleCompraModel();
     }
 
     //crear una variable sobre el estado y solo mostrar
@@ -238,5 +240,40 @@ class Compras extends BaseController
         }
 
         echo json_encode($resultado);
+    }
+
+    public function guardarCompra()
+    {
+        $id_compra = $this->request->getPost('id_compra');
+        $total = $this->request->getPost('totalCompra');
+
+        $session = session();
+
+        $guardar = $this->compras->save([
+            'folio' => $id_compra,
+            'total' => $total,
+            'id_usuario' => $session->id_username,
+        ]);
+
+        if ($guardar) {
+            $tablaCompra = $this->compras->where('folio', $id_compra)->first();
+
+            if ($tablaCompra) {
+
+                $comprasTemporales = $this->comprasTemporal->where('folio', $tablaCompra->folio)->findAll();
+
+                foreach ($comprasTemporales as $comTemp) {
+                    $this->detalleCompra->save([
+                        'id_compra' => $tablaCompra->id,
+                        'id_producto' => $comTemp->id_producto,
+                        'nombre' => $comTemp->name,
+                        'cantidad' => $comTemp->cantidad,
+                        'precio' => $comTemp->precio,
+                    ]);
+                }
+            }
+
+            return redirect()->to(base_url() . '/productos');
+        }
     }
 }

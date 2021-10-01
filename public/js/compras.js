@@ -1,5 +1,15 @@
 $(document).ready(function(){
 
+    $("#completa_compra").click(function(){
+        let nFile = $(".tablaproductos tr").length;
+
+        if(nFile < 2 ){
+
+        }else{
+            $("#form_compra").submit();
+        }
+    });
+
 });
 
 // $('#codigoCompra')
