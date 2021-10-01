@@ -270,6 +270,12 @@ class Compras extends BaseController
                         'cantidad' => $comTemp->cantidad,
                         'precio' => $comTemp->precio,
                     ]);
+
+                    $producto = $this->productos->where('id', $comTemp->id_producto)->first();
+
+                    $this->productos->update($comTemp->id_producto, [
+                        'existencias' => $producto->existencias + $comTemp->cantidad,
+                    ]);
                 }
 
                 $this->comprasTemporal->where('folio', $tablaCompra->folio)->delete();
