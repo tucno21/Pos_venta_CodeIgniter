@@ -79,7 +79,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <label class="form-label">Precio de compra</label>
-                            <input type="number" class="form-control <?php if ($validation->getError('precio_compra')) : ?>is-invalid<?php endif ?>" name="precio_compra" value="<?php echo set_value('precio_compra'); ?>" autofocus required />
+                            <input type="number" step=".01" class="form-control <?php if ($validation->getError('precio_compra')) : ?>is-invalid<?php endif ?>" name="precio_compra" value="<?php echo set_value('precio_compra'); ?>" autofocus required />
                             <?php if ($validation->getError('precio_compra')) : ?>
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('precio_compra') ?>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label class="form-label">Precio de venta</label>
-                            <input type="number" class="form-control <?php if ($validation->getError('precio_venta')) : ?>is-invalid<?php endif ?>" name="precio_venta" value="<?php echo set_value('precio_venta'); ?>" autofocus required />
+                            <input type="number" step=".01" class="form-control <?php if ($validation->getError('precio_venta')) : ?>is-invalid<?php endif ?>" name="precio_venta" value="<?php echo set_value('precio_venta'); ?>" autofocus required />
                             <?php if ($validation->getError('precio_venta')) : ?>
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('precio_venta') ?>
