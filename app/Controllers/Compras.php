@@ -23,6 +23,33 @@ class Compras extends BaseController
         $this->detalleCompra = new DetalleCompraModel();
     }
 
+    //crear una variable sobre el estado y solo mostrar
+    public function index($estado = 1)
+    {
+        //buscar el estado en la tabla
+        $compras = $this->compras->where('estado', 1)->findAll();
+
+        // print_r($data);
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+        // print_r($template['head']);
+
+        return view('backend/compras/index', [
+            'compras' => $compras,
+            'template' => $template,
+        ]);
+    }
+
+    public function nuevo()
+    {
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+        return view('backend/compras/nuevo', [
+            'template' => $template,
+        ]);
+    }
+
+
     public function buscarCodigo()
     {
         $codigo = $_GET['codigo'];
