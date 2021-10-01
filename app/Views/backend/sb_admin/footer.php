@@ -56,8 +56,8 @@
 <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../js/alerta.js"></script>
 <script src="../js/compras.js"></script>
+<script src="../js/alerta.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="../js/demo/datatables-demo.js"></script>

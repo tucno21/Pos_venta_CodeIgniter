@@ -200,7 +200,9 @@ class Compras extends BaseController
             $fila .= "<td>" . $filaCompra->precio . "</td>";
             $fila .= "<td>" . $filaCompra->cantidad . "</td>";
             $fila .= "<td>" . $filaCompra->subtotal . "</td>";
-            $fila .= "<td><a href='/compras/eliminar?id=" . $filaCompra->id . "' class='btn btn-danger alertaBorrar'><i class='fas fa-trash-alt'></i></a></td>";
+            $fila .= "<td>
+            <button id_temporal='" . $filaCompra->id . "' type='button' class='btn btn-danger alertaBorrar'><i class='fas fa-trash-alt'></i></button>
+            </td>";
             $fila .= "</tr>";
         }
 
@@ -217,5 +219,24 @@ class Compras extends BaseController
         }
 
         return $total;
+    }
+
+    public function eliminarTemporal()
+    {
+
+        $id_compra = $_GET['id_compra'];
+        $id_temporal = $_GET['id_temporal'];
+
+        $borrar = $this->comprasTemporal->where('id', $id_temporal)->delete();
+
+        $resultado['enviado'] = false;
+
+        if ($borrar) {
+            $resultado['enviado'] = true;
+            $resultado['verCompra'] = $this->verCompraTemporal($id_compra);
+            $resultado['total'] = $this->verTotalCompra($id_compra);
+        }
+
+        echo json_encode($resultado);
     }
 }

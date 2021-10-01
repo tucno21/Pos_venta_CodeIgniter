@@ -97,3 +97,29 @@ $("#agregarProducto").click(function(){
         }
     })
 });
+
+
+$(".tablaproductos tbody").on("click", "button.alertaBorrar", function(e) {
+    
+    var id_temporal = $(this).attr("id_temporal");
+    var id_compra = $('#id_compra').val();
+
+    var urlE = '/compras/eliminarTemporal?id_temporal=' + id_temporal + '&id_compra=' + id_compra;
+
+    $.ajax({
+        url : urlE,
+        dataType: 'JSON',
+        success: function(resp2) {
+            if(resp2.enviado == false) {
+         
+            }else{
+                $(".tablaproductos tbody").empty();
+                $(".tablaproductos tbody").append(resp2.verCompra);
+                $("#totalCompra").val(resp2.total);
+            }
+        }
+    })
+
+    // console.log(id_temporal);
+
+})
