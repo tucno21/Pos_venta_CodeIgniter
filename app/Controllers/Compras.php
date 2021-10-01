@@ -271,6 +271,8 @@ class Compras extends BaseController
                         'precio' => $comTemp->precio,
                     ]);
                 }
+
+                $this->comprasTemporal->where('folio', $tablaCompra->folio)->delete();
             }
 
             return redirect()->to(base_url() . '/productos');
