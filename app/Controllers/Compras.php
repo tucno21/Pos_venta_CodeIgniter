@@ -255,6 +255,7 @@ class Compras extends BaseController
         $detalleCompra = $this->detalleCompra->select('*')->where('id_compra ', $id)->findAll();
 
         $tienda = $this->tienda->first();
+        // d($tienda);
 
         $pdf = new \FPDF('P', 'mm', 'letter');
         $pdf->AddPage();
@@ -262,6 +263,59 @@ class Compras extends BaseController
         $pdf->SetTitle("compra");
         $pdf->SetFont('Arial', 'B', 10);
 
+        // $pdf->Cell(tamaño ancho, alto, "Entrada de compras", borde(0=sinlinea 1=linea), salto de linea, "C=centrado", 1:fondomegro);
+        $pdf->Cell(195, 5, "Entrada de compras", 0, 1, "C");
+        $pdf->SetFont('Arial', 'B', 9);
+        // $pdf->image(base_url() . '/images/logo.png', X, Y, ancho, alto);
+        $pdf->image(base_url() . '/images/logo.png', 185, 10, 20, 20, 'PNG');
+
+        $pdf->Cell(50, 5, $tienda->name, 0, 1, "L");
+        $pdf->Cell(20, 5, utf8_decode('Dirección: '), 0, 0, "L");
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(50, 5, $tienda->direccion, 0, 1, "L");
+
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(20, 5, 'Fecha: ', 0, 0, "L");
+        $pdf->SetFont('Arial', '', 9);
+        $pdf->Cell(50, 5, $datosCompra->created_at, 0, 1, "L");
+
+        //salto de linea
+        $pdf->Ln();
+
+        $pdf->SetFont('Arial', 'B', 8);
+        $pdf->SetFillColor(0, 0, 0);
+        $pdf->SetTextColor(255, 255, 255);
+        $pdf->Cell(195, 5, "Detalle de Productos", 1, 1, "C", 1);
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Cell(14, 5, utf8_decode("N°"), 1, 0, "L");
+        $pdf->Cell(25, 5, utf8_decode("Código"), 1, 0, "L");
+        $pdf->Cell(77, 5, "Nombre", 1, 0, "L");
+        $pdf->Cell(25, 5, "Precio", 1, 0, "L");
+        $pdf->Cell(25, 5, "Cantidad", 1, 0, "L");
+        $pdf->Cell(29, 5, "Importe", 1, 1, "L");
+
+        $fila = 1;
+        foreach ($detalleCompra as $dc) {
+            $pdf->Cell(14, 5, $fila, 1, 0, "L");
+            $pdf->Cell(25, 5, utf8_decode($dc->id_compra), 1, 0, "L");
+            $pdf->Cell(77, 5, utf8_decode($dc->nombre), 1, 0, "L");
+            $pdf->Cell(25, 5, $dc->precio, 1, 0, "L");
+            $pdf->Cell(25, 5, $dc->cantidad, 1, 0, "L");
+            $importe = number_format($dc->precio * $dc->cantidad, 2, '.', ',');
+            $pdf->Cell(29, 5, 's/ ' . $importe, 1, 1, "L");
+            $fila++;
+        }
+
+        //salto de linea
+        $pdf->Ln();
+
+
+        $pdf->SetFont('Arial', 'B', 8);
+        $pdf->Cell(120, 5, " ", 0, 0, "C");
+        $pdf->Cell(45, 5, "Total", 1, 0, "C");
+        $total = number_format($datosCompra->total, 2, '.', ',');
+        $pdf->Cell(30, 5, 's/ ' . $total, 1, 1, "C");
 
 
         //para ver archivos pdf en codinayter
