@@ -47,6 +47,7 @@
 
 <!-- Core plugin JavaScript-->
 <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../js/jquery-ui/jquery-ui.min.js"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="../js/sb-admin-2.js"></script>
@@ -57,6 +58,7 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/compras.js"></script>
+<script src="../js/ventas.js"></script>
 <script src="../js/alerta.js"></script>
 
 <!-- Page level custom scripts -->

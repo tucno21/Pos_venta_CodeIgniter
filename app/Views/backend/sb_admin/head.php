@@ -31,6 +31,7 @@ $name = $session->name;
 
     <!-- Custom styles for this page -->
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="../js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 
 </head>
 
