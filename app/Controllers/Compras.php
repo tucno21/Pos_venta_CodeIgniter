@@ -7,12 +7,13 @@ use stdClass;
 use App\Models\ComprasModel;
 use App\Models\ProductosModel;
 use App\Models\DetalleCompraModel;
+use App\Models\ConfiguracionesModel;
 use App\Models\TemporalComprasModel;
 
 class Compras extends BaseController
 {
 
-    protected $compras, $comprasTemporal, $productos, $detalleCompra;
+    protected $compras, $comprasTemporal, $productos, $detalleCompra, $tienda;
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class Compras extends BaseController
         $this->productos = new ProductosModel();
         $this->comprasTemporal = new TemporalComprasModel();
         $this->detalleCompra = new DetalleCompraModel();
+        $this->tienda = new ConfiguracionesModel();
     }
 
     //crear una variable sobre el estado y solo mostrar
@@ -226,5 +228,44 @@ class Compras extends BaseController
 
             return redirect()->to(base_url() . '/productos');
         }
+    }
+
+
+    public function verPdf()
+    {
+        $valor['id'] = $_GET['id'];
+        $id = json_decode(json_encode($valor));
+        // d($id);
+
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+
+        return view('backend/compras/verPdf', [
+            'template' => $template,
+            'id' => $id,
+        ]);
+    }
+
+    public function generapdf()
+    {
+        $id = $_GET['id'];
+
+        $datosCompra = $this->compras->where('id', $id)->first();
+
+        $detalleCompra = $this->detalleCompra->select('*')->where('id_compra ', $id)->findAll();
+
+        $tienda = $this->tienda->first();
+
+        $pdf = new \FPDF('P', 'mm', 'letter');
+        $pdf->AddPage();
+        $pdf->SetMargins(10, 10, 10);
+        $pdf->SetTitle("compra");
+        $pdf->SetFont('Arial', 'B', 10);
+
+
+
+        //para ver archivos pdf en codinayter
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->Output("compra_pdf.pdf", "I");
     }
 }
