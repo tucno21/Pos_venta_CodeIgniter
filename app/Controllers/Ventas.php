@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use stdClass;
 use App\Models\VentasModel;
+use App\Models\ClientesModel;
 use App\Models\ProductosModel;
 use App\Models\DetalleVentaModel;
 use App\Models\ConfiguracionesModel;
@@ -14,7 +15,7 @@ use App\Models\TemporalComprasModel;
 class Ventas extends BaseController
 {
 
-    protected $ventas, $ventasTemporal, $productos, $detalleVenta, $tienda;
+    protected $ventas, $ventasTemporal, $productos, $detalleVenta, $tienda, $clientes;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class Ventas extends BaseController
         $this->ventasTemporal = new TemporalComprasModel();
         $this->detalleVenta = new DetalleVentaModel();
         $this->tienda = new ConfiguracionesModel();
+        $this->clientes = new ClientesModel();
     }
 
     //crear una variable sobre el estado y solo mostrar
@@ -50,6 +52,28 @@ class Ventas extends BaseController
         return view('backend/ventas/venta', [
             'template' => $template,
         ]);
+    }
+
+    public function autocompletarClientes()
+    {
+        $enviarDatos = array();
+
+        $valor = $this->request->getGet('term');
+
+        // $clientes = $this->clientes->where('estado', 1)->findAll();
+
+        $clientes = $this->clientes->like('name', $valor)->where('estado', 1)->findAll();
+
+        if (!empty($clientes)) {
+            foreach ($clientes as $cliente) {
+                $data['id'] = $cliente->id;
+                $data['value'] = $cliente->name;
+                array_push($enviarDatos, $data);
+            }
+        }
+        // d($valor);
+
+        echo json_encode($enviarDatos);
     }
 
 
