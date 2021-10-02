@@ -31,7 +31,7 @@
                             <label for="forma_pago">Forma de pago:</label>
                             <select name="forma_pago" id="forma_pago" class="form-control" required>
                                 <option value="">Seleccione...</option>
-                                <option value="001">Efectivo</option>
+                                <option selected value="001">Efectivo</option>
                                 <option value="002">Tarjeta</option>
                                 <option value="003">Transferencia</option>
                             </select>

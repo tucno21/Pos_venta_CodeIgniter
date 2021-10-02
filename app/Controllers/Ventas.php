@@ -40,7 +40,7 @@ class Ventas extends BaseController
         // print_r($template['head']);
 
         return view('backend/ventas/index', [
-            'ventas' => $ventas,
+            // 'ventas' => $ventas,
             'template' => $template,
         ]);
     }
@@ -226,46 +226,52 @@ class Ventas extends BaseController
         echo json_encode($resultado);
     }
 
-    public function guardarCompra()
+    public function guardarVenta()
     {
-        $id_compra = $this->request->getPost('id_compra');
-        $total = $this->request->getPost('totalCompra');
+        $id_venta = $this->request->getPost('id_venta');
+        $total = $this->request->getPost('totalVenta');
+        $id_cliente = $this->request->getPost('id_cliente');
+        $forma_pago = $this->request->getPost('forma_pago');
+
 
         $session = session();
 
         $guardar = $this->ventas->save([
-            'folio' => $id_compra,
+            'folio' => $id_venta,
             'total' => $total,
             'id_usuario' => $session->id_username,
+            'id_caja' =>  $session->id_caja,
+            'id_cliente' =>  $id_cliente,
+            'forma_pago' => $forma_pago,
         ]);
 
         if ($guardar) {
-            $tablaCompra = $this->ventas->where('folio', $id_compra)->first();
+            $tablaVenta = $this->ventas->where('folio', $id_venta)->first();
 
-            if ($tablaCompra) {
+            if ($tablaVenta) {
 
-                $ventasTemporales = $this->ventasTemporal->where('folio', $tablaCompra->folio)->findAll();
+                $ventasTemporales = $this->ventasTemporal->where('folio', $tablaVenta->folio)->findAll();
 
-                foreach ($ventasTemporales as $comTemp) {
+                foreach ($ventasTemporales as $venTemp) {
                     $this->detalleVenta->save([
-                        'id_compra' => $tablaCompra->id,
-                        'id_producto' => $comTemp->id_producto,
-                        'nombre' => $comTemp->name,
-                        'cantidad' => $comTemp->cantidad,
-                        'precio' => $comTemp->precio,
+                        'id_compra' => $tablaVenta->id,
+                        'id_producto' => $venTemp->id_producto,
+                        'name' => $venTemp->name,
+                        'cantidad' => $venTemp->cantidad,
+                        'precio' => $venTemp->precio,
                     ]);
 
-                    $producto = $this->productos->where('id', $comTemp->id_producto)->first();
+                    $producto = $this->productos->where('id', $venTemp->id_producto)->first();
 
-                    $this->productos->update($comTemp->id_producto, [
-                        'existencias' => $producto->existencias + $comTemp->cantidad,
+                    $this->productos->update($venTemp->id_producto, [
+                        'existencias' => $producto->existencias - $venTemp->cantidad,
                     ]);
                 }
 
-                $this->ventasTemporal->where('folio', $tablaCompra->folio)->delete();
+                $this->ventasTemporal->where('folio', $tablaVenta->folio)->delete();
             }
 
-            return redirect()->to(base_url() . '/productos');
+            return redirect()->to(base_url() . '/ventas');
         }
     }
 

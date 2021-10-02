@@ -1,4 +1,19 @@
 $( function() {
+
+    $("#completa_venta").click(function(){
+        let nFile = $(".tablaproductosVenta tr").length;
+
+        if(nFile < 2 ){
+            Swal.fire(
+                'Debe agregar al menos un producto',
+                '-',
+                'error'
+              )
+        }else{
+            $("#form_venta").submit();
+        }
+    });
+
     $( "#clienteV" ).autocomplete({
         source: "/ventas/autocompletarClientes",
         minLength:3,
