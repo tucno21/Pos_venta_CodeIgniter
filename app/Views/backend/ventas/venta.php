@@ -45,7 +45,7 @@
                         <div class="col-12 col-sm-4">
                             <label class="form-label">Código de barras</label>
                             <input type="hidden" id="id_producto" name="id_producto" />
-                            <input type="text" id="codigoCompra" class="form-control" name="codigo" value="" autofocus placeholder="Ingresa el codigo y enter" />
+                            <input type="text" id="codigoVenta" class="form-control" name="codigo" autofocus placeholder="Ingresa el codigo y enter" />
                             <div id="errorProducto"></div>
                         </div>
                         <div class="col-12 col-sm-4 text-center">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="text-danger">-</div>
-                            <input type="text" id="totalVenta" name="totalCompra" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
+                            <input type="text" id="totalVenta" name="totalVenta" size="7" value="0.00" readonly="true" style="font-weight: bold; font-size: 30px; text-align: center;">
                         </div>
                     </div>
                     <div class="form-group">

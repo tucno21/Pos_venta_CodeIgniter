@@ -77,40 +77,35 @@ class Ventas extends BaseController
     }
 
 
-    public function buscarCodigo()
+    public function autocompletarCompra()
     {
-        $codigo = $_GET['codigo'];
+        $enviarDatos = array();
 
-        $this->productos->select('*');
-        $this->productos->where('codigo', $codigo);
-        $this->productos->where('estado', 1);
-        $producto = $this->productos->get()->getRow();
-        // $producto = $this->productos->where('codigo', $codigo)->where('estado', 1)->first();
+        $valor = $this->request->getGet('term');
 
-        $res['existe'] = false;
-        $res['producto'] = '';
-        $res['error'] = '';
+        // $clientes = $this->clientes->where('estado', 1)->findAll();
 
-        if ($producto) {
-            $res['producto'] = $producto;
-            $res['existe'] = true;
-        } else {
-            $res['error'] = 'no existe producto';
-            $res['existe'] = false;
-            // $objeto = new stdClass();
-            // $objeto->error = 'no existe producto';
-            // echo json_encode($objeto);
+        $productos = $this->productos->like('codigo', $valor)->where('estado', 1)->findAll();
+
+        if (!empty($productos)) {
+            foreach ($productos as $producto) {
+                $data['id'] = $producto->id;
+                $data['value'] = $producto->codigo;
+                $data['label'] = $producto->codigo . ' - ' . $producto->name;
+                array_push($enviarDatos, $data);
+            }
         }
+        // d($valor);
 
-        echo json_encode($res);
+        echo json_encode($enviarDatos);
     }
 
 
-    public function compraTemporal()
+    public function ventaTemporal()
     {
         $id_producto = $_GET['id_producto'];
         $cantidad = $_GET['cantidad'];
-        $id_compra = $_GET['id_compra'];
+        $id_venta = $_GET['id_venta'];
 
         $producto = $this->productos->where('id', $id_producto)->first();
 
@@ -118,62 +113,63 @@ class Ventas extends BaseController
         $resultado['error'] = '';
 
         if ($producto) {
-            $compraTemporal = $this->ventasTemporal->where('folio', $id_compra)->first();
+            $ventasTemporal = $this->ventasTemporal->where('id_producto', $producto->id)->first();
 
-            if ($compraTemporal && $producto->id == $compraTemporal->id_producto) {
+            if ($ventasTemporal && $producto->id == $ventasTemporal->id_producto) {
 
-                $subtotal = $producto->precio_compra * $cantidad;
-                // d($subtotal);
+                $cantidadNuevo = $ventasTemporal->cantidad + $cantidad;
+                $subtotalNuevo = $producto->precio_venta * $cantidadNuevo;
 
-                $res = $this->ventasTemporal->update($compraTemporal->id, [
-                    'cantidad' => $cantidad,
-                    'subtotal' => $subtotal,
+
+                $res = $this->ventasTemporal->update($ventasTemporal->id, [
+                    'cantidad' => $cantidadNuevo,
+                    'subtotal' => $subtotalNuevo,
                 ]);
 
                 $resultado['enviado'] = true;
-                $resultado['verCompra'] = $this->verCompraTemporal($id_compra);
-                $resultado['total'] = $this->verTotalCompra($id_compra);
-                // d($res);
-
+                $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                $resultado['total'] = $this->verTotalVenta($id_venta);
+                // d($resultado);
             } else {
                 $subtotal = $producto->precio_compra * $cantidad;
                 // d($subtotal);
                 $res = $this->ventasTemporal->save([
-                    'folio' => $id_compra,
+                    'folio' => $id_venta,
                     'id_producto' => $id_producto,
                     'codigo' => $producto->codigo,
                     'name' => $producto->name,
                     'cantidad' => $cantidad,
-                    'precio' => $producto->precio_compra,
+                    'precio' => $producto->precio_venta,
                     'subtotal' => $subtotal,
                 ]);
                 // d($res);
                 $resultado['enviado'] = true;
-                $resultado['verCompra'] = $this->verCompraTemporal($id_compra);
-                $resultado['total'] = $this->verTotalCompra($id_compra);
+                $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                $resultado['total'] = $this->verTotalVenta($id_venta);
             }
         }
 
         echo json_encode($resultado);
     }
 
-    public function verCompraTemporal($id_compra)
+    public function verVentaTemporal($id_venta)
     {
-        $ventasTemporales = $this->ventasTemporal->where('folio', $id_compra)->findAll();
+        $ventasTemporales = $this->ventasTemporal->where('folio', $id_venta)->findAll();
         $fila = '';
         $numFila = 0;
+        // d($ventasTemporales);
 
-        foreach ($ventasTemporales as $filaCompra) {
+        foreach ($ventasTemporales as $filaVenta) {
             $numFila++;
             $fila .= "<tr id='fila" . $numFila . "'>";
             $fila .= "<td>" . $numFila . "</td>";
-            $fila .= "<td>" . $filaCompra->codigo . "</td>";
-            $fila .= "<td>" . $filaCompra->name . "</td>";
-            $fila .= "<td>" . $filaCompra->precio . "</td>";
-            $fila .= "<td>" . $filaCompra->cantidad . "</td>";
-            $fila .= "<td>" . $filaCompra->subtotal . "</td>";
+            $fila .= "<td>" . $filaVenta->codigo . "</td>";
+            $fila .= "<td>" . $filaVenta->name . "</td>";
+            $fila .= "<td>" . $filaVenta->precio . "</td>";
+            $fila .= "<td>" . $filaVenta->cantidad . "</td>";
+            $fila .= "<td>" . $filaVenta->subtotal . "</td>";
             $fila .= "<td>
-            <button id_temporal='" . $filaCompra->id . "' type='button' class='btn btn-danger alertaBorrar'><i class='fas fa-trash-alt'></i></button>
+            <button id_temporalVenta='" . $filaVenta->id . "' type='button' class='btn btn-danger alertaBorrar'><i class='fas fa-trash-alt'></i></button>
             </td>";
             $fila .= "</tr>";
         }
@@ -181,13 +177,13 @@ class Ventas extends BaseController
         return $fila;
     }
 
-    public function verTotalCompra($id_compra)
+    public function verTotalVenta($id_venta)
     {
-        $ventasTemporales = $this->ventasTemporal->where('folio', $id_compra)->findAll();
+        $ventasTemporales = $this->ventasTemporal->where('folio', $id_venta)->findAll();
         $total = 0;
 
-        foreach ($ventasTemporales as $filaCompra) {
-            $total += $filaCompra->subtotal;
+        foreach ($ventasTemporales as $filaVenta) {
+            $total += $filaVenta->subtotal;
         }
 
         return $total;
@@ -196,17 +192,35 @@ class Ventas extends BaseController
     public function eliminarTemporal()
     {
 
-        $id_compra = $_GET['id_compra'];
+        $id_venta = $_GET['id_venta'];
         $id_temporal = $_GET['id_temporal'];
-
-        $borrar = $this->ventasTemporal->where('id', $id_temporal)->delete();
 
         $resultado['enviado'] = false;
 
-        if ($borrar) {
-            $resultado['enviado'] = true;
-            $resultado['verCompra'] = $this->verCompraTemporal($id_compra);
-            $resultado['total'] = $this->verTotalCompra($id_compra);
+        $ventaTemporal = $this->ventasTemporal->where('id', $id_temporal)->first();
+
+        if ($ventaTemporal) {
+            if ($ventaTemporal->cantidad > 1) {
+                $cantidadVenta = $ventaTemporal->cantidad - 1;
+                $nuevoSubtotal = $ventaTemporal->precio * $cantidadVenta;
+
+                $res = $this->ventasTemporal->update($ventaTemporal->id, [
+                    'cantidad' => $cantidadVenta,
+                    'subtotal' => $nuevoSubtotal,
+                ]);
+
+                $resultado['enviado'] = true;
+                $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                $resultado['total'] = $this->verTotalVenta($id_venta);
+            } else {
+                $borrar = $this->ventasTemporal->where('id', $id_temporal)->delete();
+
+                if ($borrar) {
+                    $resultado['enviado'] = true;
+                    $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                    $resultado['total'] = $this->verTotalVenta($id_venta);
+                }
+            }
         }
 
         echo json_encode($resultado);
