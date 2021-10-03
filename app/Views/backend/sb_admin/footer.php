@@ -59,6 +59,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/compras.js"></script>
 <script src="../js/ventas.js"></script>
+<script src="../js/visorfoto.js"></script>
 <script src="../js/alerta.js"></script>
 
 <!-- Page level custom scripts -->

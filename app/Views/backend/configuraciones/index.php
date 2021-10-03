@@ -82,7 +82,28 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- LOGO -->
+                <div class="form-group">
+                    <label for="imagen">Logo de la tienda:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <spam class="input-group-text"><i class="fab fa-slack"></i></spam>
+                        </div>
+                        <input type="file" name="logo" id="imagen" class="visorFoto" multiple>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="card" style="width: 8rem;">
+                        <?php if (isset($config->logo)) : ?>
+                            <img class="img-thumbnail card-img-top previsualizar" src="../imagenes/<?php echo $candidato->logo; ?>" alt="Card image cap">
+                        <?php else : ?>
+                            <img class="img-thumbnail card-img-top previsualizar" src="../backendAL/img/voto.jpg" alt="Card image cap">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <p class="card-text">Peso máximo de 1mb</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <input type="hidden" name="id" value="<?php echo $config->id; ?>">
