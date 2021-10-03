@@ -40,7 +40,7 @@ class Ventas extends BaseController
         // print_r($template['head']);
 
         return view('backend/ventas/index', [
-            // 'ventas' => $ventas,
+            'ventas' => $ventas,
             'template' => $template,
         ]);
     }
@@ -254,7 +254,7 @@ class Ventas extends BaseController
 
                 foreach ($ventasTemporales as $venTemp) {
                     $this->detalleVenta->save([
-                        'id_compra' => $tablaVenta->id,
+                        'id_venta' => $tablaVenta->id,
                         'id_producto' => $venTemp->id_producto,
                         'name' => $venTemp->name,
                         'cantidad' => $venTemp->cantidad,
@@ -295,76 +295,77 @@ class Ventas extends BaseController
     {
         $id = $_GET['id'];
 
-        $datosCompra = $this->ventas->where('id', $id)->first();
+        $datosVenta = $this->ventas->where('id', $id)->first();
 
-        $detalleVenta = $this->detalleVenta->select('*')->where('id_compra ', $id)->findAll();
+        $detalleVentas = $this->detalleVenta->select('*')->where('id_venta ', $id)->findAll();
 
         $tienda = $this->tienda->first();
-        // d($tienda);
+        // d($detalleVentas);
 
-        $pdf = new \FPDF('P', 'mm', 'letter');
+        $pdf = new \FPDF('P', 'mm', array(80, 200));
         $pdf->AddPage();
-        $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle("compra");
+        $pdf->SetMargins(5, 5, 5);
+        $pdf->SetTitle("venta");
         $pdf->SetFont('Arial', 'B', 10);
 
         // $pdf->Cell(tamaño ancho, alto, "Entrada de ventas", borde(0=sinlinea 1=linea), salto de linea, "C=centrado", 1:fondomegro);
-        $pdf->Cell(195, 5, "Entrada de ventas", 0, 1, "C");
+        $pdf->Cell(70, 5, $tienda->name, 0, 1, "C");
         $pdf->SetFont('Arial', 'B', 9);
         // $pdf->image(base_url() . '/images/logo.png', X, Y, ancho, alto);
-        $pdf->image(base_url() . '/images/logo.png', 185, 10, 20, 20, 'PNG');
+        $pdf->image(base_url() . '/images/logo.png', 10, 8, 10, 10, 'PNG');
 
-        $pdf->Cell(50, 5, $tienda->name, 0, 1, "L");
-        $pdf->Cell(20, 5, utf8_decode('Dirección: '), 0, 0, "L");
         $pdf->SetFont('Arial', '', 9);
-        $pdf->Cell(50, 5, $tienda->direccion, 0, 1, "L");
+        $pdf->Cell(70, 5, $tienda->direccion, 0, 1, "C");
 
-        $pdf->SetFont('Arial', 'B', 9);
-        $pdf->Cell(20, 5, 'Fecha: ', 0, 0, "L");
-        $pdf->SetFont('Arial', '', 9);
-        $pdf->Cell(50, 5, $datosCompra->created_at, 0, 1, "L");
+        $pdf->SetFont('Arial', 'B', 7);
+        $pdf->Cell(20, 5, 'Fecha: ', 0, 0, "R");
+        $pdf->SetFont('Arial', '', 7);
+        $pdf->Cell(50, 5, $datosVenta->created_at, 0, 1, "L");
+
+        $pdf->SetFont('Arial', 'B', 7);
+        $pdf->Cell(20, 5, 'Ticket: ', 0, 0, "R");
+        $pdf->SetFont('Arial', '', 7);
+        $pdf->Cell(50, 5, $datosVenta->folio, 0, 1, "L");
 
         //salto de linea
         $pdf->Ln();
 
-        $pdf->SetFont('Arial', 'B', 8);
-        $pdf->SetFillColor(0, 0, 0);
-        $pdf->SetTextColor(255, 255, 255);
-        $pdf->Cell(195, 5, "Detalle de Productos", 1, 1, "C", 1);
 
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Cell(14, 5, utf8_decode("N°"), 1, 0, "L");
-        $pdf->Cell(25, 5, utf8_decode("Código"), 1, 0, "L");
-        $pdf->Cell(77, 5, "Nombre", 1, 0, "L");
-        $pdf->Cell(25, 5, "Precio", 1, 0, "L");
-        $pdf->Cell(25, 5, "Cantidad", 1, 0, "L");
-        $pdf->Cell(29, 5, "Importe", 1, 1, "L");
+        $pdf->SetFont('Arial', 'B', 7);
+        $pdf->Cell(7, 5, "Cant", 0, 0, "L");
+        $pdf->Cell(30, 5, "Nombre", 0, 0, "C");
+        $pdf->Cell(13, 5, "Precio", 0, 0, "L");
+        $pdf->Cell(20, 5, "Importe", 0, 1, "L");
 
         $fila = 1;
-        foreach ($detalleVenta as $dc) {
-            $pdf->Cell(14, 5, $fila, 1, 0, "L");
-            $pdf->Cell(25, 5, utf8_decode($dc->id_compra), 1, 0, "L");
-            $pdf->Cell(77, 5, utf8_decode($dc->nombre), 1, 0, "L");
-            $pdf->Cell(25, 5, $dc->precio, 1, 0, "L");
-            $pdf->Cell(25, 5, $dc->cantidad, 1, 0, "L");
+        foreach ($detalleVentas as $dc) {
+            $pdf->Cell(7, 5, $dc->cantidad, 0, 0, "C");
+            $pdf->Cell(30, 5, utf8_decode($dc->name), 0, 0, "C");
+            $pdf->Cell(13, 5, $dc->precio, 0, 0, "L");
             $importe = number_format($dc->precio * $dc->cantidad, 2, '.', ',');
-            $pdf->Cell(29, 5, 's/ ' . $importe, 1, 1, "L");
+            $pdf->Cell(20, 5, 's/ ' . $importe, 0, 1, "L");
             $fila++;
         }
 
         //salto de linea
         $pdf->Ln();
 
-
         $pdf->SetFont('Arial', 'B', 8);
-        $pdf->Cell(120, 5, " ", 0, 0, "C");
-        $pdf->Cell(45, 5, "Total", 1, 0, "C");
-        $total = number_format($datosCompra->total, 2, '.', ',');
-        $pdf->Cell(30, 5, 's/ ' . $total, 1, 1, "C");
+        $pdf->Cell(35, 5, "Total", 0, 0, "C");
+        $total = number_format($datosVenta->total, 2, '.', ',');
+        $pdf->Cell(35, 5, 's/ ' . $total, 0, 1, "C");
+
+        $pdf->Ln();
+        // $pdf->Ln();
+
+        $pdf->SetFont('Arial', '', 8);
+        // $pdf->MultiCell(ancho, alto, texto, borde, aliniacion, colorFondo);
+        $pdf->MultiCell(70, 4, $tienda->leyenda, 0, "C", 0);
 
 
         //para ver archivos pdf en codinayter
         $this->response->setHeader('Content-Type', 'application/pdf');
-        $pdf->Output("compra_pdf.pdf", "I");
+        $pdf->Output("ticket.pdf", "I");
     }
 }
