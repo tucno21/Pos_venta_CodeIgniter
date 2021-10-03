@@ -370,4 +370,31 @@ class Ventas extends BaseController
         $this->response->setHeader('Content-Type', 'application/pdf');
         $pdf->Output("ticket.pdf", "I");
     }
+
+    public function eliminar()
+    {
+        $id = $_GET['id'];
+        $venta = $this->ventas->where('id', $id)->first();
+
+        $estado = $this->ventas->update($id, [
+            'estado' => 0,
+        ]);
+
+        if ($estado) {
+
+            $detalleVenta = $this->detalleVenta->where('id_venta', $venta->id)->findAll();
+
+            foreach ($detalleVenta as $dv) {
+                $product = $this->productos->where('id', $dv->id_producto)->first();
+                $existencia = $product->existencias + $dv->cantidad;
+                $this->productos->update($product->id, [
+                    'existencias' => $existencia,
+                ]);
+            }
+
+            return redirect()->to(base_url() . '/ventas');
+        }
+
+        // d($venta->estado);
+    }
 }
