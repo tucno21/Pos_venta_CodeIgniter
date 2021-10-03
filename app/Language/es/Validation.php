@@ -63,10 +63,10 @@ return [
     'valid_cc_num' => '{field} does not appear to be a valid credit card number.',
 
     // Files
-    'uploaded' => '{field} is not a valid uploaded file.',
-    'max_size' => '{field} is too large of a file.',
-    'is_image' => '{field} is not a valid, uploaded image file.',
-    'mime_in'  => '{field} does not have a valid mime type.',
-    'ext_in'   => '{field} does not have a valid file extension.',
-    'max_dims' => '{field} is either not an image, or it is too wide or tall.',
+    'uploaded' => '{field} no es un archivo valido',
+    'max_size' => '{field} es un archivo demasiado grande.',
+    'is_image' => '{field} no es un archivo de imagen válido.',
+    'mime_in'  => '{field} no es un archivo con las extenciones solicitadas',
+    'ext_in'   => '{field} no tiene una extensión de archivo válida.',
+    'max_dims' => '{field} no es una imagen o es demasiado ancha o alta.',
 ];

@@ -10,7 +10,7 @@
         <div class="card-header py-3">
             <a href="<?php echo base_url(); ?>/dashboard" class="btn btn-info">Panel Informativo</a>
         </div>
-        <form action="<?php echo base_url(); ?>/configuraciones/actualizar" method="post" autocomplete="off">
+        <form action="<?php echo base_url(); ?>/configuraciones/actualizar" method="post" autocomplete="off" enctype="multipart/form-data">
             <?= csrf_field() ?>
             <div class="card-body">
                 <!-- nombre y RFC -->
@@ -89,15 +89,20 @@
                         <div class="input-group-prepend">
                             <spam class="input-group-text"><i class="fab fa-slack"></i></spam>
                         </div>
-                        <input type="file" name="logo" id="imagen" class="visorFoto" multiple>
+                        <input type="file" name="logo" id="imagen" class="visorFoto form-control <?php if ($validation->getError('logo')) : ?>is-invalid<?php endif ?>" multiple>
+                        <?php if ($validation->getError('logo')) : ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('logo') ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="card" style="width: 8rem;">
-                        <?php if (isset($config->logo)) : ?>
-                            <img class="img-thumbnail card-img-top previsualizar" src="../imagenes/<?php echo $candidato->logo; ?>" alt="Card image cap">
+                        <?php if ($config->logo != '') : ?>
+                            <img class="img-thumbnail card-img-top previsualizar" src="../images/<?php echo $config->logo; ?>" alt="Card image cap">
                         <?php else : ?>
-                            <img class="img-thumbnail card-img-top previsualizar" src="../backendAL/img/voto.jpg" alt="Card image cap">
+                            <img class="img-thumbnail card-img-top previsualizar" src="../images/logo.png" alt="Card image cap">
                         <?php endif; ?>
                         <div class="card-body">
                             <p class="card-text">Peso máximo de 1mb</p>

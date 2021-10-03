@@ -15,7 +15,7 @@ class ConfiguracionesModel extends Model
     //eliminacion de filas
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['name', 'rfc', 'telefono', 'email', 'direccion', 'leyenda'];
+    protected $allowedFields = ['name', 'rfc', 'telefono', 'email', 'direccion', 'leyenda', 'logo'];
 
     protected $useTimestamps = false;
     protected $createdField  = null;
