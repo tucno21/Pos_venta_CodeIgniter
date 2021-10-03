@@ -397,4 +397,19 @@ class Ventas extends BaseController
 
         // d($venta->estado);
     }
+
+    public function eliminados()
+    {
+        $estado = 0;
+        $ventas = $this->ventas->obtenerVentas($estado);
+
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+
+
+        return view('backend/ventas/eliminados', [
+            'ventas' => $ventas,
+            'template' => $template,
+        ]);
+    }
 }
