@@ -25,4 +25,16 @@ class VentasModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function obtenerVentas($estado = 1)
+    {
+        $this->select('ventas.*, U.username AS vendedor, C.name AS cliente');
+        $this->join('usuarios AS U', 'ventas.id_usuario = U.id');
+        $this->join('clientes AS C', 'ventas.id_cliente = C.id');
+        $this->where('ventas.estado', $estado);
+        $this->orderBy('ventas.created_at', 'DESC');
+
+        $ventas = $this->findAll();
+        return $ventas;
+    }
 }

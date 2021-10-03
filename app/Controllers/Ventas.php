@@ -32,7 +32,9 @@ class Ventas extends BaseController
     public function index($estado = 1)
     {
         //buscar el estado en la tabla
-        $ventas = $this->ventas->where('estado', 1)->findAll();
+        // $ventas = $this->ventas->where('estado', 1)->findAll();
+        $ventas = $this->ventas->obtenerVentas();
+        // d($ventas);
 
         // print_r($data);
         $template['head'] =  view('backend/sb_admin/head');
