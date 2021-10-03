@@ -314,7 +314,11 @@ class Ventas extends BaseController
         $pdf->Cell(70, 5, $tienda->name, 0, 1, "C");
         $pdf->SetFont('Arial', 'B', 9);
         // $pdf->image(base_url() . '/images/logo.png', X, Y, ancho, alto);
-        $pdf->image(base_url() . '/images/logo.png', 10, 8, 10, 10, 'PNG');
+        if ($tienda->logo != '') {
+            $pdf->image(base_url() . '/images/' . $tienda->logo, 8, 8, 8, 8);
+        } else {
+            $pdf->image(base_url() . '/images/logo.png', 10, 8, 8, 8, 'PNG');
+        }
 
         $pdf->SetFont('Arial', '', 9);
         $pdf->Cell(70, 5, $tienda->direccion, 0, 1, "C");

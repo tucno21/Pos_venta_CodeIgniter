@@ -267,7 +267,12 @@ class Compras extends BaseController
         $pdf->Cell(195, 5, "Entrada de compras", 0, 1, "C");
         $pdf->SetFont('Arial', 'B', 9);
         // $pdf->image(base_url() . '/images/logo.png', X, Y, ancho, alto);
-        $pdf->image(base_url() . '/images/logo.png', 185, 10, 20, 20, 'PNG');
+        // $pdf->image(base_url() . '/images/logo.png', 185, 10, 20, 20, 'PNG');
+        if ($tienda->logo != '') {
+            $pdf->image(base_url() . '/images/' . $tienda->logo, 185, 10, 20, 20);
+        } else {
+            $pdf->image(base_url() . '/images/logo.png', 185, 10, 20, 20, 'PNG');
+        }
 
         $pdf->Cell(50, 5, $tienda->name, 0, 1, "L");
         $pdf->Cell(20, 5, utf8_decode('Dirección: '), 0, 0, "L");
