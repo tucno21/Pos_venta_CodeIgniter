@@ -25,4 +25,12 @@ class ProductosModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+
+    public function productosMinimos()
+    {
+        $where = "stock_minimo >= existencias AND inventariable = 1 AND estado = 1";
+        $datos = $this->where($where)->countAllResults();
+        return $datos;
+    }
 }

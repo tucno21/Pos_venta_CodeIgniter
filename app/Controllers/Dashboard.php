@@ -27,11 +27,13 @@ class Dashboard extends BaseController
         // $where = "estado = 1 AND DATE(created_at) = '$fechaHoy'";
         // $ventasHoy = $this->ventas->where($where)->countAllResults();
 
+        $stockMinimo = $this->productos->productosMinimos();
 
-        // d($ventasHoy[0]->total);
+        // d($stockMinimo);
         return view('backend/dashboard/index', [
             'totalProductos' => $totalProductos,
             'ventasHoy' => $ventasHoy,
+            'stockMinimo' => $stockMinimo,
         ]);
     }
 }
