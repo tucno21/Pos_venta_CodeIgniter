@@ -37,4 +37,13 @@ class VentasModel extends Model
         $ventas = $this->findAll();
         return $ventas;
     }
+
+    public function ventasHoy($fechaHoy)
+    {
+        $this->select("sum(total) AS total");
+        $where = "estado = 1 AND DATE(created_at) = '$fechaHoy'";
+        $enviar = $this->where($where)->findAll();
+        // dd($this->getLastQuery());
+        return $enviar;
+    }
 }

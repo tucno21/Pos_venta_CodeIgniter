@@ -41,7 +41,7 @@
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="/ventas/venta">
-                    <i class="far fa-money-bill-alt"></i>
+                    <i class="fas fa-cash-register"></i>
                     <span>Caja</span></a>
             </li>
 
