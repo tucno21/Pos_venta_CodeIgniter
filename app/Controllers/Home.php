@@ -2,16 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Models\LogsModel;
 use App\Models\UsuariosModel;
 
 class Home extends BaseController
 {
-    protected $usuarios;
+    protected $usuarios, $logs;
 
     public function __construct()
     {
         helper(['form', 'url']);
         $this->usuarios = new UsuariosModel();
+        $this->logs = new LogsModel();
     }
 
     public function index()
@@ -38,6 +40,17 @@ class Home extends BaseController
                     $encritar = password_verify($password, $usuario->password);
 
                     if ($encritar) {
+
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        $detalles = $_SERVER['HTTP_USER_AGENT'];
+
+                        $this->logs->save([
+                            'id_usuario' => $usuario->id,
+                            'evento' => 'inicio de session',
+                            'ip' => $ip,
+                            'detalles' => $detalles,
+                        ]);
+
                         $datosSesion = [
                             'id_username' => $usuario->id,
                             'name' => $usuario->name,
