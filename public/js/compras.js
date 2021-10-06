@@ -4,7 +4,11 @@ $(document).ready(function(){
         let nFile = $(".tablaproductos tr").length;
 
         if(nFile < 2 ){
-
+            Swal.fire(
+                'Debe agregar al menos un producto',
+                '-',
+                'error'
+              )
         }else{
             $("#form_compra").submit();
         }

@@ -226,7 +226,7 @@ class Compras extends BaseController
                 $this->comprasTemporal->where('folio', $tablaCompra->folio)->delete();
             }
 
-            return redirect()->to(base_url() . '/productos');
+            return redirect()->to(base_url() . '/compras');
         }
     }
 
