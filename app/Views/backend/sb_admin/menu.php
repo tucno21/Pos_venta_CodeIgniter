@@ -59,6 +59,7 @@
                 </a>
                 <div id="collapseD" class="collapse" aria-labelledby="headingD" data-parent="#accordionSidebar">
                     <div class="py-2 bg-white rounded collapse-inner">
+                        <a class="collapse-item" href="/reportes/stockminimo">Stock Minimo</a>
                         <a class="collapse-item" href="/reportes/ventas">Reporte de ventas</a>
                         <a class="collapse-item" href="/reportes/productos">Reporte de Productos</a>
                         <a class="collapse-item" href="/reportes/procat">Productos x categoria</a>

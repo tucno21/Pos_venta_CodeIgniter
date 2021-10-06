@@ -33,4 +33,11 @@ class ProductosModel extends Model
         $datos = $this->where($where)->countAllResults();
         return $datos;
     }
+
+    public function getGroductosMinimos()
+    {
+        $where = "stock_minimo >= existencias AND inventariable = 1 AND estado = 1";
+        $datos = $this->where($where)->findAll();
+        return $datos;
+    }
 }

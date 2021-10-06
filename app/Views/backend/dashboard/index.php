@@ -80,7 +80,7 @@ include '../app/Views/backend/sb_admin/head.php';
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a class="text-info" href="<?php echo base_url() . '/ventas'; ?>">Ver detalles</a>
+                    <a class="text-info" href="<?php echo base_url() . '/reportes/stockminimo'; ?>">Ver detalles</a>
                 </div>
             </div>
         </div>
