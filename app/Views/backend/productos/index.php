@@ -20,7 +20,8 @@
                             <th>N°</th>
                             <th>Código</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
+                            <th>Precio Compra</th>
+                            <th>Precio Venta</th>
                             <th>Existencias</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
@@ -32,6 +33,7 @@
                                 <td><?php echo $producto->id; ?></td>
                                 <td><?php echo $producto->codigo; ?></td>
                                 <td><?php echo $producto->name; ?></td>
+                                <td><?php echo $producto->precio_compra; ?></td>
                                 <td><?php echo $producto->precio_venta; ?></td>
                                 <td><?php echo $producto->existencias; ?></td>
                                 <td>
