@@ -58,7 +58,15 @@ $( function() {
                     success: function(resp3) {
           
                         if(resp3.enviado == false) {
-                     
+                            if(resp3.error == true){
+                                $('#codigoVenta').val('');
+                                Swal.fire(
+                                    'No existe más productos',
+                                    '-',
+                                    'error'
+                                )
+
+                            }
                         }else{
                             $(".tablaproductosVenta tbody").empty();
                             $(".tablaproductosVenta tbody").append(resp3.verVenta);

@@ -112,42 +112,53 @@ class Ventas extends BaseController
         $producto = $this->productos->where('id', $id_producto)->first();
 
         $resultado['enviado'] = false;
-        $resultado['error'] = '';
+        $resultado['error'] = false;
 
         if ($producto) {
             $ventasTemporal = $this->ventasTemporal->where('id_producto', $producto->id)->first();
 
-            if ($ventasTemporal && $producto->id == $ventasTemporal->id_producto) {
+            if ($producto->existencias > 0) {
+                if ($ventasTemporal && $producto->id == $ventasTemporal->id_producto) {
 
-                $cantidadNuevo = $ventasTemporal->cantidad + $cantidad;
-                $subtotalNuevo = $producto->precio_venta * $cantidadNuevo;
+                    // dd($producto->existencias >= $ventasTemporal->cantidad);
+                    if ($producto->existencias > $ventasTemporal->cantidad) {
+
+                        $cantidadNuevo = $ventasTemporal->cantidad + $cantidad;
+                        $subtotalNuevo = $producto->precio_venta * $cantidadNuevo;
 
 
-                $res = $this->ventasTemporal->update($ventasTemporal->id, [
-                    'cantidad' => $cantidadNuevo,
-                    'subtotal' => $subtotalNuevo,
-                ]);
+                        $res = $this->ventasTemporal->update($ventasTemporal->id, [
+                            'cantidad' => $cantidadNuevo,
+                            'subtotal' => $subtotalNuevo,
+                        ]);
 
-                $resultado['enviado'] = true;
-                $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
-                $resultado['total'] = $this->verTotalVenta($id_venta);
-                // d($resultado);
+                        $resultado['enviado'] = true;
+                        $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                        $resultado['total'] = $this->verTotalVenta($id_venta);
+                        // d($resultado);
+
+                    } else {
+                        $resultado['error'] = true;
+                    }
+                } else {
+                    $subtotal = $producto->precio_compra * $cantidad;
+                    // d($subtotal);
+                    $res = $this->ventasTemporal->save([
+                        'folio' => $id_venta,
+                        'id_producto' => $id_producto,
+                        'codigo' => $producto->codigo,
+                        'name' => $producto->name,
+                        'cantidad' => $cantidad,
+                        'precio' => $producto->precio_venta,
+                        'subtotal' => $subtotal,
+                    ]);
+                    // d($res);
+                    $resultado['enviado'] = true;
+                    $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
+                    $resultado['total'] = $this->verTotalVenta($id_venta);
+                }
             } else {
-                $subtotal = $producto->precio_compra * $cantidad;
-                // d($subtotal);
-                $res = $this->ventasTemporal->save([
-                    'folio' => $id_venta,
-                    'id_producto' => $id_producto,
-                    'codigo' => $producto->codigo,
-                    'name' => $producto->name,
-                    'cantidad' => $cantidad,
-                    'precio' => $producto->precio_venta,
-                    'subtotal' => $subtotal,
-                ]);
-                // d($res);
-                $resultado['enviado'] = true;
-                $resultado['verVenta'] = $this->verVentaTemporal($id_venta);
-                $resultado['total'] = $this->verTotalVenta($id_venta);
+                $resultado['error'] = true;
             }
         }
 
