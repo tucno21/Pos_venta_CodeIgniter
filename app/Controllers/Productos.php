@@ -192,4 +192,38 @@ class Productos extends BaseController
 
         return redirect()->to(base_url() . '/productos');
     }
+
+    public function verPdf()
+    {
+        $template['head'] =  view('backend/sb_admin/head');
+        $template['footer'] =  view('backend/sb_admin/footer');
+
+        return view('backend/productos/verPdf', [
+            'template' => $template,
+        ]);
+    }
+
+    public function codebar()
+    {
+        $generaBarcode = new \bar_code();
+
+        $pdf = new \FPDF('P', 'mm', 'letter');
+        $pdf->AddPage();
+        $pdf->SetMargins(10, 10, 10, 10);
+        $pdf->SetTitle('Código de barras');
+
+        $productos = $this->productos->where('estado', 1)->findAll();
+
+        foreach ($productos as $producto) {
+            $codigo = $producto->codigo;
+
+            $generaBarcode->barcode($codigo . '.png', $codigo, 20, 'horizontal', 'code128', true);
+
+            $pdf->Image($codigo . '.png');
+        }
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $pdf->Output('codigo.pdf', 'I');
+
+        // d($productos);
+    }
 }

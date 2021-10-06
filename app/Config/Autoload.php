@@ -85,5 +85,6 @@ class Autoload extends AutoloadConfig
      */
     public $files = [
         'FPDF'  => APPPATH . 'ThirdParty/fpdf/fpdf.php',
+        'bar_code'  => APPPATH . 'Libraries/barcode.php',
     ];
 }
