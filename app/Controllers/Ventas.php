@@ -141,7 +141,7 @@ class Ventas extends BaseController
                         $resultado['error'] = true;
                     }
                 } else {
-                    $subtotal = $producto->precio_compra * $cantidad;
+                    $subtotal = $producto->precio_venta * $cantidad;
                     // d($subtotal);
                     $res = $this->ventasTemporal->save([
                         'folio' => $id_venta,
