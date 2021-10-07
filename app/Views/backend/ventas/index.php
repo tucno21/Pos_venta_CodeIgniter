@@ -37,7 +37,7 @@
                                     <a href="<?php echo base_url('/ventas/verPdf?id=' . $venta->id); ?>" class="btn btn-success"><i class="far fa-file-pdf"></i></a>
                                 </td>
                                 <td>
-                                    <a href="<?php echo base_url('/ventas/eliminar?id=' . $venta->id); ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="<?php echo base_url('/ventas/eliminar?id=' . $venta->id); ?>" class="btn btn-danger alertaBorrar"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
